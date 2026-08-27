@@ -106,27 +106,32 @@ function clampCount() {
 }
 
 /* ── 문제 생성 ──────────────────────────────────────── */
-function makeChoices(answer, source) {
-  const others = shuffle(
-    source.filter((c) => normalize(c.capital) !== normalize(answer.capital))
-  );
+function makeChoices(answer) {
   const picked = [];
   const seen = new Set([normalize(answer.capital)]);
-  for (const c of others) {
-    const key = normalize(c.capital);
-    if (seen.has(key)) continue;
-    seen.add(key);
-    picked.push(c);
+
+  // 같은 대륙에서 먼저 고른다. 오답이 다른 대륙이면 지역을 보고 답을 찍을 수 있다.
+  const tiers = [
+    COUNTRIES.filter((c) => c.region === answer.region),
+    COUNTRIES
+  ];
+  for (const tier of tiers) {
+    for (const c of shuffle(tier)) {
+      if (picked.length === 3) break;
+      const key = normalize(c.capital);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      picked.push(c);
+    }
     if (picked.length === 3) break;
   }
   return shuffle(picked.concat([answer]));
 }
 
 function buildQuiz(items) {
-  const source = COUNTRIES;
   return items.map((item) => ({
     item,
-    choices: settings.mode === "choice" ? makeChoices(item, source) : []
+    choices: settings.mode === "choice" ? makeChoices(item) : []
   }));
 }
 
