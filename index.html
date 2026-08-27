@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세계 수도 퀴즈</title>
+<meta name="description" content="나라 이름을 보고 수도를 맞히는 퀴즈. UN 회원국 193개국 수록.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- 시작 화면 -->
+  <section id="screen-start" class="screen">
+    <header class="hero">
+      <div class="hero-emoji">🌍</div>
+      <h1>세계 수도 퀴즈</h1>
+      <p class="hero-sub">나라 이름을 보고 수도를 맞혀 보세요<br><span class="en">Guess the capital city</span></p>
+    </header>
+
+    <div class="card">
+      <div class="field">
+        <label class="field-label">지역 <span class="en">Region</span></label>
+        <div id="region-picker" class="chips"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">문항 수 <span class="en">Questions</span></label>
+        <div id="count-picker" class="chips"></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">방식 <span class="en">Mode</span></label>
+        <div id="mode-picker" class="chips"></div>
+      </div>
+
+      <p id="pool-info" class="pool-info"></p>
+      <button id="btn-start" class="btn btn-primary btn-block">퀴즈 시작</button>
+      <p id="best-record" class="best-record"></p>
+    </div>
+  </section>
+
+  <!-- 퀴즈 화면 -->
+  <section id="screen-quiz" class="screen" hidden>
+    <div class="quiz-top">
+      <div class="progress-track"><div id="progress-bar" class="progress-bar"></div></div>
+      <div class="quiz-meta">
+        <span id="q-index">1 / 10</span>
+        <span id="q-score">0점</span>
+      </div>
+    </div>
+
+    <div class="card question-card">
+      <p class="question-label">이 나라의 수도는? <span class="en">What is the capital?</span></p>
+      <h2 id="q-country" class="q-country">대한민국</h2>
+      <p id="q-country-en" class="q-country-en">South Korea</p>
+      <p id="q-region" class="q-region">아시아</p>
+    </div>
+
+    <div id="choices" class="choices"></div>
+
+    <form id="typing-form" class="typing" hidden>
+      <input id="typing-input" class="typing-input" type="text" autocomplete="off"
+             autocapitalize="off" spellcheck="false" placeholder="수도 이름을 입력하세요 (한글 또는 영어)">
+      <button type="submit" class="btn btn-primary">확인</button>
+    </form>
+
+    <div id="feedback" class="feedback" hidden>
+      <p id="feedback-title" class="feedback-title"></p>
+      <p id="feedback-answer" class="feedback-answer"></p>
+      <button id="btn-next" class="btn btn-primary btn-block">다음 문제</button>
+    </div>
+
+    <button id="btn-quit" class="btn btn-ghost btn-block">그만두기</button>
+  </section>
+
+  <!-- 결과 화면 -->
+  <section id="screen-result" class="screen" hidden>
+    <div class="card result-card">
+      <div id="result-emoji" class="result-emoji">🎉</div>
+      <h2 id="result-title" class="result-title">참 잘했어요!</h2>
+      <p class="result-score"><span id="result-correct">0</span> / <span id="result-total">0</span></p>
+      <p id="result-rate" class="result-rate">정답률 0%</p>
+      <p id="result-new-best" class="result-new-best" hidden>🏆 최고 기록 경신!</p>
+      <div class="result-actions">
+        <button id="btn-retry-wrong" class="btn btn-primary btn-block" hidden>틀린 문제만 다시 풀기</button>
+        <button id="btn-again" class="btn btn-secondary btn-block">같은 설정으로 다시</button>
+        <button id="btn-home" class="btn btn-ghost btn-block">처음으로</button>
+      </div>
+    </div>
+
+    <div id="review" class="review"></div>
+  </section>
+
+  <footer class="footer">
+    <a href="https://github.com/ctbot000/capital-quiz" target="_blank" rel="noopener">GitHub</a>
+    <span>·</span>
+    <span>UN 회원국 193개국</span>
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
